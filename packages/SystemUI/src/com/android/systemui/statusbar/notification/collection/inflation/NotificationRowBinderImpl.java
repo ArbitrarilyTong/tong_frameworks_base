@@ -28,7 +28,9 @@ import static java.util.Objects.requireNonNull;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.Notification;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -36,6 +38,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
+import android.net.Uri;
 import android.os.Build;
 import android.service.notification.StatusBarNotification;
 import android.util.Base64;
@@ -216,14 +219,25 @@ public class NotificationRowBinderImpl implements NotificationRowBinder {
             String packageName = statusBarNotification.getPackageName();
             Icon smallIcon = notification.getSmallIcon();
             Drawable drawable = smallIcon.loadDrawable(context);
-            // TODO: 使用预置的图标
-            // if(Objects.equals(packageName, "com.tencent.mobileqq")){
-            //     notification.setSmallIcon(
-            //             Icon.createWithBitmap(base64ToBitmap("iVBORw0KGgoAAAANSUhEUgAAAEQAAABECAYAAAA4E5OyAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAToSURBVHic7ZzLj1RFFIe/6oEZmAEdRBQDihodmMQgOD4J4iPEaFSEhUSikZj4XrlV/wVdysKFCQtWPuKGmLgxBlcmGh+A+AIJghpBgwqD0jOfi+oxwyDT91F9+5LMl9zFdOqcPvW7deueOlU9MMMM0xG68q0ahFnEqwdoTIpFYLx1NYFmCGG8qtAqFUSdD1wDrARuAFYAlwOLgP5WPKPAUeBHYC+wB/gE+D4EfodgJ2OsRBC1ATwAPATcQhSlL6P5aeAH4FNgJ/BWCGG0E3FWgnqtuk09qDYtzrj6s/qmOtLtfhVCvVH9soQI5+Kgek+3+5cLdUTd3QExJjikru92PzOhrlX3dFCMCQ6rD3a7v9OiDtuZx+RcHFHXdbvf/4vap+5QxyoURPV99cIUfWikcAKABmALsD6p32ysAbaqPWUdJQtcuBTYCFySymcOBoBNxPymFCnv5Ahwd0J/ebkNuNOYBBYmpSCPAfMT+stLH/A4MKeMkySpu9oL/An0pvBXkqEQwrdFjVONkK3UQwyAZ8sYpxLk0UR+UrBBnVXUuLQg6iLgprJ+EnIVMFzUOMUIGSHWMupCD3BzUeMUgixP4CM1K4saphBkKIGP1KwoaphCkKUJfKRmmTq3iGEpQdQ+4OIyPjrEAAWTxLIjpB9IsspMTIOCGWtZQSZvH9SJAMwuYlj1Mr32lBXkH+KGUt0YB04VMUwxh5QuynSAHmCwiGFZQe4FFpf00QkGgY2tKl4uCguiDgC3U/BOdJg5wBrjFmkuyoyQIeBW6vmWAVjVunJRSJBWMXc19VzHTLAYWKPmWngWHSGDwGbicYa60iAWni/La1SEIeCugrZVspKcpYCigjxHfUqG7XgmT+PcE6K6ENgPXJDXtkv8DawKIezL0rjICNnM+SMGxO2Jp7I2ziWIOpu4/3K+saWVN7Ul7wgZIcF2YRcYBO7L0jCvIPdzfj0uE/QCG7I0zCxIa8itJvthuTrRAIbVJVkaZmUFsIz6purTEYgJ2vXtGuYR5GrqubLNykXA8nYr4EyCtN4uy4EFCQLrFnOBYWHedI2yjpABYrpex2JQHq6kTbkiqyD9nL3/IvAbsYxYN5rAr8DYlM+X0GZ7IqsgczlTEIFdwEvAsYw+qmQUeBV4lzNFWUyiR6YXWDjp7+PA68A+6llkFjgCbAN+mvT5AG0WpVkFmUUcJRO8AbwDHABOZA6zOk4BXwEfAq9M+rxtypDntTvR9gPgxRDCaAgcAr7J4aMqjgGfhxDGgNeA7VkNswrSBP4APgYeCSG0JtIgsCNPpBWxPYRwGiCE0CTWb3YS+1E+sVQXqM+rZx0zUPvVvVUeW27DYeOppqlxLlVfMEP6nkKwdVZ/nPtcPFGmL6n2dj8iTrTd5j3g7W4HAfz3K4jPjL98qppx9YC6tts6nIH6cCuwqkU5pj5pgsP/SVFnq5vU/RWKcbQlRqEjVFNJfT5kkLi2OZrY73Qcb131WomrT6tfqCfU0xWOkDH1pPq1+rKxVNE1GYJ6nbqrQgHasVst/DORUlmbsc66E7ijjJ8O8B2wNoTwS17DspvVY8S1TT9wBbEin0fkJnFxeII470icC+YTl+l5hr/ASeAQsTRRqE5TOq83zu7ziMvqvK+9qf/4QOJNarR85Y1vnCjEyRDCXzltZ5hhhhlK8y9TfBhasm2lvAAAAABJRU5ErkJggg=="))
-            //     );
-            //     return;
-            // }
-            // 根据算法自动生成
+            // Get from settings
+            try {
+                Uri uri = Uri.parse("content://top.easterNday.ICON/ICON");
+                ContentResolver resolver = context.getContentResolver();
+                String[] projection = {"packageName", "iconBitmap"};
+                String selection = "packageName = ?";
+                String[] selectionArgs = {packageName};
+                Cursor cursor = resolver.query(uri, projection, selection, selectionArgs, null);
+                if (cursor != null && cursor.moveToFirst()) {
+                    String bm = cursor.getString(cursor.getColumnIndexOrThrow("iconBitmap"));
+                    notification.setSmallIcon(Icon.createWithBitmap(base64ToBitmap(bm)));
+                    cursor.close();
+                    return;
+                }
+            }
+            catch (Exception e){
+                Log.e("fixNotificationIcon",e.toString());
+            }
+            // Generate it automatically
             if (drawable instanceof BitmapDrawable) {
                 Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
                 if (!new ImageUtils().isGrayscale(bitmap)) {
