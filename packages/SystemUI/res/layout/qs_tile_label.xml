@@ -33,7 +33,7 @@
          android:layout_height="wrap_content"
          android:gravity="center_horizontal">
         <com.android.systemui.util.DelayableMarqueeTextView
-             android:id="@ id/tile_label"
+             android:id="@+id/tile_label"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:ellipsize="marquee"
@@ -43,7 +43,7 @@
              android:textDirection="locale" />
  
          <ImageView
-             android:id="@ id/chevron"
+             android:id="@+id/chevron"
              android:layout_width="@dimen/kscope_qs_tile_chevron_width"
              android:layout_height="@dimen/kscope_qs_tile_chevron_height"
              android:autoMirrored="true"
@@ -54,7 +54,7 @@
      </LinearLayout>
 
     <com.android.systemui.util.DelayableMarqueeTextView
-        android:id="@ id/app_label"
+        android:id="@+id/app_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textDirection="locale"
