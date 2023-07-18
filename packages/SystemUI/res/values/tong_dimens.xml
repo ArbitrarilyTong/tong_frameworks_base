@@ -2,7 +2,7 @@
 <resources>
 
     <!-- QuickQS BrightnessBar -->
-    <dimen name="tong_qqs_brightness_margin_top">8dp</dimen>
+    <dimen name="tong_qqs_brightness_margin_top">11dp</dimen>
 
     <!-- QS tile -->
     <dimen name="kscope_qs_tile_text_size">11sp</dimen>
