@@ -13,4 +13,8 @@
     <dimen name="kscope_qs_tile_height">92dp</dimen>
     <dimen name="kscope_qs_tile_chevron_width">10dp</dimen>
     <dimen name="kscope_qs_tile_chevron_height">12dp</dimen>
+
+    <!-- QS Media Output -->
+    <dimen name="kscope_quick_settings_bottom_margin_media">12dp</dimen>
+    <dimen name="kscope_quick_settings_top_margin_media">19dp</dimen>
 </resources>
