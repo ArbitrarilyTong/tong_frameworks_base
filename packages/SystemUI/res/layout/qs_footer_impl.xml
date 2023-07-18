@@ -19,9 +19,7 @@
 <com.android.systemui.qs.QSFooterView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/qs_footer"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/qs_footer_margin"
-    android:layout_marginEnd="@dimen/qs_footer_margin"
+    android:layout_height="@dimen/kscope_qs_footer_height"
     android:layout_marginBottom="@dimen/qs_footers_margin_bottom"
     android:background="@android:color/transparent"
     android:baselineAligned="false"
@@ -31,7 +29,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/qs_footer_height"
+            android:layout_height="18dp"
             android:layout_gravity="center_vertical">
 
             <TextView
@@ -51,14 +49,22 @@
             <com.android.systemui.qs.PageIndicator
                 android:id="@+id/footer_page_indicator"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
                 android:visibility="gone" />
 
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
+
+             <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/quick_qs_panel"
+                android:layout_marginTop="@dimen/tong_qqs_brightness_margin_top"
+	            android:layout_marginBottom="@dimen/tong_qqs_brightness_margin_top"
+                android:id="@+id/qs_brightness_dialog"/>
+
                 <com.android.systemui.statusbar.AlphaOptimizedImageView
                     android:id="@android:id/edit"
                     android:layout_width="@dimen/qs_footer_action_button_size"

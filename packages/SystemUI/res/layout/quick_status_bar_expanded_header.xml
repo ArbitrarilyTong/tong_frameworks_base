@@ -45,12 +45,4 @@
         android:importantForAccessibility="no">
     </com.android.systemui.qs.QuickQSPanel>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/quick_qs_panel"
-            android:layout_marginTop="@dimen/tong_qqs_brightness_margin_top"
-	        android:layout_marginBottom="@dimen/tong_qqs_brightness_margin_top"
-            android:id="@+id/qs_brightness_dialog"/>
-
 </com.android.systemui.qs.QuickStatusBarHeader>
