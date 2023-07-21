@@ -52,18 +52,15 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/qs_brightness_dialog"/>
+
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
-
-             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/quick_qs_panel"
-                android:layout_marginTop="@dimen/tong_qqs_brightness_margin_top"
-	            android:layout_marginBottom="@dimen/tong_qqs_brightness_margin_top"
-                android:id="@+id/qs_brightness_dialog"/>
 
                 <com.android.systemui.statusbar.AlphaOptimizedImageView
                     android:id="@android:id/edit"
